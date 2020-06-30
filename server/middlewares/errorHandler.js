@@ -4,12 +4,6 @@ function errorHandler(err, req, res, next){
     let errMsg;
 
     switch(err.name){
-        case "EMAIL_ALREADY_REGISTERED":
-            errCode = 404;
-            errStatus = err.name;
-            errMsg = 'Your email is already registered. Please use another email or directly go to login.'
-            break;
-
         case "INVALID_PASSWORD":
             errCode = 404;
             errStatus = err.name;

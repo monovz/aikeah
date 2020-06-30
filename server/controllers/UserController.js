@@ -11,18 +11,7 @@ class UserController{
             password: req.body.password,
         }
 
-        User.findOne({where:{
-            email: newUser.email
-            }
-        })
-            .then(data=>{
-                if(!data){
-                    return User.create(newUser)
-                } else{
-                    next({name: 'EMAIL_ALREADY_REGISTERED'})
-                }
-            })
-
+        User.create(newUser)
             .then(data=>{
                 res.status(201).json(data)
             })
