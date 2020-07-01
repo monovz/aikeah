@@ -41,7 +41,13 @@ class UserController{
                 if(data){
                     if(comparePassword(user.password, data.password)){
                         const token = generateToken(data.id, data.username, data.email, data.role);
-                        res.status(200).json({token, id: data.id, username: data.username, email: data.email})
+                        res.status(200).json({token, user: {
+                            id: data.id, 
+                            username: data.username, 
+                            email: data.email,
+                            role: data.role,
+                            }
+                        })
                     } else{
                         next({name: "INVALID_PASSWORD"})
                     }

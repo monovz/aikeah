@@ -9,6 +9,7 @@ describe('POST /login', function() {
         .then(response=>{
             // console.log(response.body)
             const {body, status} = response;
+            global.user = body.user
             global.token = body.token
             expect(status).toBe(200);
             expect(body).toHaveProperty('token', expect.any(String))
