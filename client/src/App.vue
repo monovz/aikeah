@@ -15,6 +15,7 @@ export default {
   created() {
     this.$store.dispatch('fetchProducts');
     if (localStorage.token) {
+      this.$store.dispatch('fetchTransactions');
       this.$store.commit('setIsLoggedIn');
       this.$store.commit('setUser');
     }

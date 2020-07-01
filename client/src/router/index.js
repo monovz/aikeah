@@ -51,6 +51,10 @@ router.beforeEach((to, from, next) => {
     } else {
       next();
     }
+  } else if ((to.path === '/login' || to.path === '/register') && localStorage.token) {
+    next({
+      path: '/',
+    });
   } else {
     next();
   }

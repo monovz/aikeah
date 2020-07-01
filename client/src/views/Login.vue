@@ -56,11 +56,15 @@ export default {
         },
       })
         .then(({ data }) => {
-          localStorage.setItem('token', data.token);
-          this.$store.commit('setIsLoggedIn');
-          this.$router.push('/');
-          localStorage.setItem('user', `{"id":"${data.id}","username":"${data.username}","email":"${data.email}"}`);
-          this.$store.commit('setUser');
+          if (data.user.role === 'user') {
+            localStorage.setItem('token', data.token);
+            this.$store.commit('setIsLoggedIn');
+            this.$router.push('/');
+            localStorage.setItem('user', `{"id":"${data.user.id}","username":"${data.user.username}","email":"${data.user.email}"}`);
+            this.$store.commit('setUser');
+          } else {
+            console.log('Invalid username. Please try again!');
+          }
         })
 
         .catch((err) => {

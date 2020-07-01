@@ -93,6 +93,7 @@ describe('POST /products/:id/transaction', function(){
     it('response with new transaction', function(done){
         const obj = {
             ProductId: product_id_test,
+            amount: 2,
             UserId: 2
         }
         request(app)

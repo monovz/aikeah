@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id',
       },
     },
-    status: DataTypes.ENUM(["to cart", "finished"])
+    status: DataTypes.ENUM(["to cart", "finished"]),
+    amount: DataTypes.INTEGER,
   }, { sequelize });
   Transaction.associate = function(models) {
     Transaction.belongsTo(models.Product, {foreignKey: "ProductId", targetKey: "id"})

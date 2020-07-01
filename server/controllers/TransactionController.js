@@ -1,4 +1,4 @@
-const { Transaction } = require('../models');
+const { Transaction, Product } = require('../models');
 const {Op} = require('sequelize');
 
 class TransactionController{
@@ -6,6 +6,9 @@ class TransactionController{
         Transaction.findAll({
             where:{
                 UserId: req.userData.id
+            },
+            include:{
+                model: Product
             }
         })
 

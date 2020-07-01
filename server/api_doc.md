@@ -1,5 +1,5 @@
-# E-commerce CMS
-Membuat sebuah website CMS E-commerce dengan Sequelize dan Postgresql (server) dan Vue.js (client)
+# E-commerce
+Make e-commerce website for user with Sequelize and Postgresql (server) also Vue.js (client)
 
 
 # List Routing
@@ -8,7 +8,12 @@ Membuat sebuah website CMS E-commerce dengan Sequelize dan Postgresql (server) d
 - 'GET /products/:id
 - 'PUT /products/:id'
 - 'DELETE /products/:id'
+- 'POST /products/:id/transaction'
+- 'DELETE /products/:id/transaction'
+- 'GET /transactions'
+- 'PUT /transactions'
 - 'POST /login'
+- 'POST /register'
 
 # Details
 
@@ -29,7 +34,33 @@ _Request Body_
 _Request Response_
 ```
 {
-    access_token: <your API token>
+    token: <your API token>
+}
+```
+
+## POST /register
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+{
+    "username" : <add your username>,
+    "email" : <add your email>,
+    "password" : <add your password>
+}
+```
+
+_Request Response_
+```
+{
+    "username" : <add your username>,
+    "email" : <add your email>,
+    "password" : <add your password>,
+    "createdAt": "2020-06-08T06:43:51.386Z",
+    "updatedAt": "2020-06-08T13:07:25.937Z"
 }
 ```
 
@@ -37,7 +68,7 @@ _Request Response_
 _Request Header_
 ```
 {
-    "access_token": <add your token>
+    "token": <add your token>
 }
 ```
 _Request Body_
@@ -60,7 +91,6 @@ _* Response(201)_
     "price": 10000,
     "stock": 10,
     "UserId": 2,
-    "due_date": "2020-06-09T00:00:00.000Z",
     "createdAt": "2020-06-08T06:43:51.386Z",
     "updatedAt": "2020-06-08T13:07:25.937Z"
 }
@@ -69,9 +99,7 @@ _* Response(201)_
 ## GET /products
 _Request Header_
 ```
-{
-    "access_token": <your token> 
-}
+not needed
 ```
 
 _Request Body_
@@ -90,7 +118,6 @@ _*Response(200)_
         "price": 10000,
         "stock": 10,
         "UserId": 2,
-        "due_date": "2020-06-09T00:00:00.000Z",
         "createdAt": "2020-06-08T06:43:51.386Z",
         "updatedAt": "2020-06-08T13:07:25.937Z"
     }
@@ -100,9 +127,7 @@ _*Response(200)_
 ## GET /products/1
 _Request Header_
 ```
-{
-    "access_token": <your token> 
-}
+not needed
 ```
 
 _Request Body_
@@ -120,7 +145,6 @@ _*Response(200)_
     "price": 10000,
     "stock": 10,
     "UserId": 2,
-    "due_date": "2020-06-09T00:00:00.000Z",
     "createdAt": "2020-06-08T06:43:51.386Z",
     "updatedAt": "2020-06-08T13:07:25.937Z"
 }
@@ -130,7 +154,7 @@ _*Response(200)_
 _Request Header_
 ```
 {
-    "access_token": <your token> 
+    "token": <your token> 
 }
 ```
 
@@ -156,7 +180,7 @@ _*Response(200)_
 _Request Header_
 ```
 {
-    "access_token": <your token>
+    "token": <your token>
 }
 ```
 
@@ -170,5 +194,103 @@ _*Response(200)_
 ```
 {
     "message": `Data's succesfully updated!`
+}
+```
+
+## POST /products/:id/transaction
+_Request Header_
+```
+{
+    "token": <add your token>
+}
+```
+_Request Body_
+```
+{
+    "amount": 3
+}
+```
+
+_Request Response_:
+_* Response(201)_
+```
+{
+    "id": 11,
+    "UserId": 3,
+    "ProductId": 56,
+    "status": "to cart",
+    "amount": 3,
+    "createdAt": "2020-07-01T11:01:20.578Z",
+    "updatedAt": "2020-07-01T11:01:20.578Z"
+}
+```
+
+## DELETE /products/:id/transaction
+_Request Header_
+```
+{
+    "token": <add your token>
+}
+```
+_Request Body_
+```
+not needed
+```
+
+_Request Response_:
+_* Response(201)_
+```
+{
+    "message": "Product transaction successfully deleted",
+}
+```
+
+## GET /products/1
+_Request Header_
+```
+{
+    "token": <your token> 
+}
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Request Response_
+_*Response(200)_
+```
+[
+    {
+        "id": 11,
+        "UserId": 3,
+        "ProductId": 56,
+        "status": "to cart",
+        "amount": 3,
+        "createdAt": "2020-07-01T11:01:20.578Z",
+        "updatedAt": "2020-07-01T11:01:20.578Z"
+    },
+    ...
+]
+```
+
+## PUT /transaction
+_Request Header_
+```
+{
+    "token": <add your token>
+}
+```
+_Request Body_
+```
+not needed
+```
+
+_Request Response_:
+_* Response(201)_
+```
+{
+    "message": "Transaction successfully paid",
 }
 ```

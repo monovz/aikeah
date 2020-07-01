@@ -85,17 +85,36 @@ class ProductController{
         const newTransaction = {
             UserId: req.body.UserId,
             ProductId: id,
+            amount: Number(req.body.amount),
             status : 'to cart'
         }
+        let transaction
 
         if(process.env.NODE_ENV !== "test"){
-            newProduct.UserId = req.userData.id
+            newTransaction.UserId = req.userData.id
         }
 
         Transaction.create(newTransaction)
             .then(data=>{
-                res.status(201).json(data)
+                transaction = data
+                return Product.findByPk(id)
             })
+
+            .then(data=>{
+                let stock = Number(data.stock) - Number(newTransaction.amount);
+                return Product.update({
+                    stock
+                },{
+                    where: {
+                        id
+                    }
+                })
+            })
+
+            .then(data=>{
+                res.status(201).json(transaction)
+            })
+
             .catch(err=>{
                 next(err)
             })
@@ -103,17 +122,47 @@ class ProductController{
 
     static deleteTransaction(req, res, next){
         const {id} = req.params;
-        Transaction.destroy({
+        let amount;
+        Transaction.findOne({
             where:{
                 [Op.and]:[{
-                    ProductId: id
+                    UserId: req.userData.id,
                 },{
-                    UserId: req.userData.id
+                    ProductId: id
                 }]
             }
         })
+
             .then(data=>{
-                res.status(200).json({message: 'Product Transaction successfully deleted'})
+                amount = data.amount;
+                return Transaction.destroy({
+                    where:{
+                        [Op.and]:[{
+                            ProductId: id
+                        },{
+                            UserId: req.userData.id
+                        },{
+                            status: 'to cart'
+                        }]
+                    }
+                })
+            })
+        
+            .then(data=>{
+                return Product.findByPk(id)
+            })
+
+            .then(data=>{
+                let stock = Number(data.stock) + Number(amount)
+                return Product.update({
+                    stock
+                },{
+                    where:{id}
+                })
+            })
+
+            .then(()=>{
+                res.status(200).json({message: 'data successfully deleted'})
             })
 
             .catch(err=>{
