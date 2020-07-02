@@ -1,6 +1,7 @@
 <template>
   <div>
-    <b-navbar toggleable="lg" type="dark" variant="primary" class="px-5 py-2">
+    <b-navbar toggleable="lg" type="dark" class="px-5 py-2"
+    style="background-color: #2196f3!important;">
       <router-link to="/" class="mr-4 mt-2">
       <b-navbar-brand><h2>AIKEAH</h2></b-navbar-brand>
       </router-link>

@@ -5,7 +5,7 @@
             <template v-if= "carts.length > 0">
                 <b-row no-gutters v-for= "(cart, i) in carts" :key= "i"
                 style="border: 1px solid rgba(0,0,0,.125)">
-                <b-col md="2">
+                <b-col md="2" class="pl-5">
                     <b-card-img :src= "cart.Product.image_url" alt="Image"
                     class="rounded-0" fluid></b-card-img>
                 </b-col>
@@ -15,7 +15,7 @@
                         Amount: {{cart.amount}} pcs
                     </b-card-text>
                     <b-card-text>
-                        <a @click.prevent= "deleteTransaction(cart.Product.id)"
+                        <a href="" @click.prevent= "deleteTransaction(cart.Product.id)"
                         class="text-danger" style="text-decoration:underline;">
                             <small>Delete Transaction</small>
                         </a>
