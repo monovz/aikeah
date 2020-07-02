@@ -5,6 +5,7 @@ import Register from '../views/Register.vue';
 import MainPage from '../views/MainPage.vue';
 import DetailProduct from '../views/DetailProduct.vue';
 import NotFound from '../views/NotFound.vue';
+import Cart from '../views/Cart.vue';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart,
   },
   {
     path: '*',

@@ -4,8 +4,7 @@ const {Op} = require('sequelize')
 
 const authentication = (req, res, next)=>{
     const {token} = req.headers
-
-    if(!token){
+    if(token === 'undefined'){
         next({name: 'EMPTY_TOKEN'})
     } else{
         const decode = verifyToken(token);

@@ -85,7 +85,7 @@ class ProductController{
         const newTransaction = {
             UserId: req.body.UserId,
             ProductId: id,
-            amount: Number(req.body.amount),
+            amount: req.body.amount,
             status : 'to cart'
         }
         let transaction
@@ -94,9 +94,37 @@ class ProductController{
             newTransaction.UserId = req.userData.id
         }
 
-        Transaction.create(newTransaction)
+        Transaction.findOne({
+            where:{
+                [Op.and]:[{
+                    UserId:req.userData.id
+                },{
+                    ProductId: id
+                },{
+                    status: 'to cart'
+                }]
+            }
+        })
             .then(data=>{
-                transaction = data
+                if(data){
+                    transaction = data
+                    return Transaction.update({
+                        amount: Number(data.amount) + Number(newTransaction.amount)
+                    },{
+                        where:{
+                            [Op.and]:[{
+                                UserId:req.userData.id
+                            },{
+                                ProductId: id
+                            }]
+                        }
+                    })
+                } else{
+                    return Transaction.create(newTransaction)
+                }
+            })
+        
+            .then(data=>{
                 return Product.findByPk(id)
             })
 

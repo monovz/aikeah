@@ -8,8 +8,18 @@ module.exports = (sequelize, DataTypes) => {
   Product.init({
     name: DataTypes.STRING,
     image_url: DataTypes.STRING,
-    price: DataTypes.INTEGER,
-    stock: DataTypes.INTEGER,
+    price: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0
+      }
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0
+      }
+    },
     UserId: {
       type: DataTypes.INTEGER,
       references:{

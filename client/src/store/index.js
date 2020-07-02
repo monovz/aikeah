@@ -7,7 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     isLoggedIn: false,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'https://ecommerce-cms-monovz.herokuapp.com',
     user: {},
     products: [],
     detailProduct: {},
@@ -105,9 +105,13 @@ export default new Vuex.Store({
         headers: {
           token: localStorage.token,
         },
+        data: {
+          amount: data.amount,
+        },
       })
         .then(() => {
           context.dispatch('fetchTransactions');
+          context.dispatch('fetchProducts');
         })
         .catch((err) => {
           console.log(err.response.data.message);

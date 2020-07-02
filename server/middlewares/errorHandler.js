@@ -4,6 +4,18 @@ function errorHandler(err, req, res, next){
     let errMsg;
 
     switch(err.name){
+        case 'SequelizeValidationError':
+            errCode = 404;
+            errStatus = err.name;
+            errMsg = err.message
+            break;
+
+        case 'EMPTY_TOKEN':
+            errCode = 404;
+            errStatus = err.name;
+            errMsg = "You have not logged in. Please login first!"
+            break;
+
         case "INVALID_PASSWORD":
             errCode = 404;
             errStatus = err.name;
